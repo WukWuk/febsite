@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Валентинка</title>
+    <style>
+        body {
+            background-color: pink;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            font-family: Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+        .heart-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            transform: rotate(-45deg);
+            animation: float 4s linear infinite;
+        }
+        .heart:before, .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .heart:before { top: -10px; left: 0; }
+        .heart:after { left: 10px; top: 0; }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(-45deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(-45deg); opacity: 0; }
+        }
+        
+        .text {
+            font-size: 24px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 10px;
+            position: relative;
+            z-index: 2;
+            display: inline-block;
+            max-width: 80%;
+        }
+        .click-message {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .big-heart {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 250px;
+            height: 250px;
+            background-color: red;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .big-heart:before, .big-heart:after {
+            content: '';
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .big-heart:before { top: -125px; left: 0; }
+        .big-heart:after { left: 125px; top: 0; }
+        img {
+            display: block;
+            margin: 10px auto;
+            max-width: 100%;
+            height: auto;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body onclick="changeText()">
+    <div class="heart-container" id="heart-container"></div>
+    <div class="text" id="text">Нажмите на экран в 13:56 (юмор)</div>
+    <div class="big-heart" id="big-heart"></div>
+    <script>
+        const messages = [
+            "Привет, Натась!<div class='click-message'>Клик на экран</div>",
+            "Улыбнись, сегодня хороший день!<div class='click-message'>Клик на экран</div>",
+            "Я очень ценю тебя и рад, что мы с тобой познакомились<div class='click-message'>Клик на экран</div>",
+            "<img src='monkey.jpg' alt='Внезапная обезьяна #WTF' width='200'><br>Внезапная обезьяна #WTF<div class='click-message'>Клик на экран</div>",
+            "<img src='heron.jpg' alt='Внезапный херон' width='200'><br>Внезапный херонвроттер<div class='click-message'>Клик на экран</div>",
+            "Спасибо за то, что ты есть<div class='click-message'>Клик на экран</div>",
+            "Мне с тобой очень хорошо<div class='click-message'>Клик на экран</div>",
+            "Я обожаю тебя и твои невероятные глаза<div class='click-message'>Клик на экран</div>",
+            "<img src='love.jpg' alt='Люблю тебя и с 14 февраля!' width='200'><br>Люблю тепя и с 14 февраля!<div class='click-message'>Клик на экран</div>",
+            "HEART"
+        ];
+        
+        let index = 0;
+        function changeText() {
+            if (index < messages.length) {
+                if (messages[index] === "HEART") {
+                    document.getElementById("text").style.display = "none";
+                    document.getElementById("big-heart").style.opacity = "1";
+                } else {
+                    document.getElementById("text").innerHTML = messages[index];
+                }
+                index++;
+            }
+        }
+        
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.top = Math.random() * 100 + "vh";
+            heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+            document.getElementById("heart-container").appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+        
+        setInterval(createHeart, 300);
+    </script>
+</body>
+</html>
